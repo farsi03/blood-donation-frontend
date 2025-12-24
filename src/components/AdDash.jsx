@@ -1,12 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Button } from '@mui/material';
-
+import axios from 'axios';
+import { useEffect } from 'react';
+import {useNavigate} from 'react-router-dom'
 const AdDash = () => {
-    const donors = [
-    {  name: "Ameen", blood: "A+", phone: "9876543210"},
-    {  name: "Rahul", blood: "B+", phone: "9123456780" },
-    { name: "Alfiya", blood: "O-", phone: "7890123456" }];
+  const[donors,setDonors]=useState([]);
+  useEffect(()=>{
+    fetchDonors();
+  },[]);
+  const fetchDonors=async()=>{
+    try{
+      const response=await axios.get('http://localhost:3000/viewdonors');
+      setDonors(response.data);
+    }catch(error){
+      console.error(error);
+    }
+  }
+  const deleteDonor=async(id)=>{
+    await axios.delete(`http://localhost:3000/deletedonor/${id}`)
+    alert("Donor deleted successfully")
+    fetchDonors()
+  }
+  const navigate=useNavigate();
   return (
     <div>
          <h1 style={{color:"red"}} >Donors List</h1>
@@ -24,12 +40,12 @@ const AdDash = () => {
                       <TableBody>
                           {donors.map((val)=>{
                               return(
-                          <TableRow>
+                          <TableRow key={val._id}>
                                       <TableCell>{val.name}</TableCell>
-                                      <TableCell>{val.blood}</TableCell>
-                                      <TableCell>{val.phone}</TableCell>
-                                   <TableCell> <Button color='error' variant='contained' >DELETE</Button></TableCell>
-                                    <TableCell><Button color='success' variant='contained' >UPDATE</Button></TableCell>
+                                      <TableCell>{val.blood_group}</TableCell>
+                                      <TableCell>{val.phno}</TableCell>
+                                   <TableCell> <Button color='error' variant='contained' onClick={()=>deleteDonor(val._id)}>DELETE</Button></TableCell>
+                                    <TableCell><Button color='success' variant='contained'onClick={()=>navigate(`/updatedonor/${val._id}`)} >UPDATE</Button></TableCell>
                           </TableRow>
                           )
                         })}

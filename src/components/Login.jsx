@@ -1,31 +1,42 @@
 import { Button, colors, TextField } from '@mui/material'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
 
 const Login = () => {
   const navigate = useNavigate();
-  const[username,setUserName]=useState('');
+  const[email,setEmail]=useState('');
   const[password,setPassword]=useState(''); 
 
-  const adminUser="admin";
-  const adminPassword="admin123";
 
-  const handleLogin = () => {
-
-    if(username == adminUser && password == adminPassword)
-    {
-      alert("Login Successful");
-      navigate("/admindashboard");
+  const handleLogin =async () => {
+    try {
+      const response = await axios.post('http://localhost:3000/login', {
+        email: email,
+        password: password,
+      });
+      if (response.data.status==="success") {
+        if(response.data.role==="admin"){
+        navigate("/admindashboard");
+      } else {
+        localStorage.setItem("email",email)
+        navigate("/dashboard");
+      }
+      } else {
+        alert("Invalid credentials");
+      }
+    } catch (error) {
+      alert("Login failed");
+      console.log(error)
     }
-    else
-    navigate("/dashboard");
   };
-      return (
+
+  return (
     <div>
         <h2 style={{color:"red"}}>Login Page</h2>
-        <TextField label="Username" variant="outlined" onChange={(e)=>setUserName(e.target.value)} /><br /><br />
+        <TextField label="email" variant="outlined" onChange={(e)=>setEmail(e.target.value)} /><br /><br />
         <br />
-        <TextField label="Password" type="password" variant="outlined"onChange={(e)=>setPassword(e.target.value)} /> <br /><br />  
+        <TextField label="password" type="password" variant="outlined"onChange={(e)=>setPassword(e.target.value)} /> <br /><br />  
         <Button variant='contained' color='error'onClick={handleLogin}>Login</Button>
     </div>
   )

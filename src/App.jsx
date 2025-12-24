@@ -14,6 +14,8 @@ import AdDash from './components/AdDash'
 import AdNavBar from './components/adNavBar'
 import AddDonor from './components/AddDonor'
 import ViewRequest from './components/ViewRequest'
+import RequestStatus from './components/RequestStatus'
+import UpdateDonor from './components/UpdateDonor'
 
 
 function App() {
@@ -34,6 +36,8 @@ function App() {
        <Route path='/admindashboard' element={<><AdNavBar/><AdDash/></>} />
        <Route path='/add' element={<AddDonor/>} />
        <Route path='/v' element={<ViewRequest/>} />
+       <Route path='/status' element={<RequestStatus/>} />
+       <Route path='/updatedonor/:id' element={<UpdateDonor/>}/>
       
            </Routes> 
     

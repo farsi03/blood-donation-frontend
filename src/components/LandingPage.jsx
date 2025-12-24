@@ -12,13 +12,13 @@ const LandingPage = () => {
       }}
       >
         <div style={{flex:1}}>
-        <h1 className-="fade-text  " style={{color:"#c20000",textDecoration:"underline", textAlign:"left"  }}>
+        <h1  style={{color:"#c20000",textDecoration:"underline", textAlign:"left"  }}>
             Welcome to the Blood Bank Donation System</h1>
         <p className="fade-text delay" style={{
-      fontSize: "18px",
-      lineHeight: "1.6",
+      fontSize: "19px",
+      lineHeight: "1.7",
       color:"#444",
-      maxWidth: "500px",
+      maxWidth: "700px",
       textAlign: "left",
       
   }}>

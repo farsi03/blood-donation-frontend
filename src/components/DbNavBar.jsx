@@ -6,6 +6,9 @@ const DbNavBar = () => {
   const handleLogOut = () => {
     navigate("/");
   }
+  const handleStatus = () => {
+    navigate("/status");
+  }
   return (
         <div className="navbar">
       <div className="nav-left">
@@ -15,7 +18,9 @@ const DbNavBar = () => {
         <Link to="/r">
           <button className="nav-btn login-btn">Request Form</button>
         </Link>
-      
+      <Link to="/status">
+        <button className="nav-btn login-btn" onClick={handleStatus}>Request Status</button>
+      </Link>
         <Link to="/">
           <button className="nav-btn signup-btn" onClick={handleLogOut}>Log Out</button>
         </Link>
